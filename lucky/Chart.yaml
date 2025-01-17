@@ -14,10 +14,10 @@ maintainers:
   - name: kongyoubs
     email: kongyoubs@gmail.com
 dependencies:
-  - name: common
-    repository: https://github.com/LZTZSY-KONGYOU/charts
-    version: 4.3.0
+- name: common
+  version: 4.5.2
+  repository: https://k8s-at-home.com/charts/
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: Upgraded `common` chart dependency to version `4.3.0`.
+      description: Upgraded `common` chart dependency to version `4.5.2`.
