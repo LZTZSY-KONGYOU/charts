@@ -38,6 +38,6 @@ hostNetwork: true
 persistence:
   config:
     enabled: true
-    mountPath: /data/k3s/lucky
+    mountPath: /data/k3s/charts/lucky
     accessMode: ReadWriteOnce
     size: 1Gi
