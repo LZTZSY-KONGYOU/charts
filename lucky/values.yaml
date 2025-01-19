@@ -1,0 +1,43 @@
+  ##
+  # IMPORTANT NOTE
+  #
+  # This chart inherits from our common library chart. You can check the default values/options here:
+  # https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
+  #
+
+image:
+  # -- image repository
+  repository: gdy666/lucky
+  # -- image tag
+  tag: latest
+  # -- image pull policy
+  pullPolicy: Always
+
+controller:
+  # -- Number of pods to load balance between
+  replicas: 1
+
+env:
+  # -- Set the container timezone
+  TZ: Asia/Shanghai
+  # -- Configures service settings for the chart.
+  # @default -- See values.yaml
+
+service:
+  main:
+    primary: true
+    type: ClusterIP
+    ports:
+      http:
+        port: 16601
+        protocol: TCP
+        targetPort: 16601
+
+hostNetwork: true
+
+persistence:
+  config:
+    enabled: true
+    mountPath: /data/k3s/charts/lucky
+    accessMode: ReadWriteOnce
+    size: 1Gi
