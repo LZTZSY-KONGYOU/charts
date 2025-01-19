@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-wordpress-pvc
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+  - {{ .Values.persistence.wordpress.accessMode }}
+  storageClassName: {{ .Values.persistence.wordpress.storageClass }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.wordpress.size }}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-mysql-pvc
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+  - {{ .Values.persistence.mysql.accessMode }}
+  storageClassName: {{ .Values.persistence.mysql.storageClass }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.mysql.size }}

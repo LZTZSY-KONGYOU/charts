@@ -1,0 +1,79 @@
+# 基础配置
+replicaCount: 1
+
+# WordPress 镜像配置
+wordpress:
+  image:
+    repository: wordpress
+    tag: latest
+    pullPolicy: IfNotPresent
+
+# MySQL 配置
+mysql:
+  enabled: true
+  image:
+    repository: mysql
+    tag: 8.0
+    pullPolicy: IfNotPresent
+
+  database: wordpress
+  user: wordpress
+
+# Secret 管理
+secrets:
+  mysql:
+    rootPassword: 
+      useExisting: false
+      name: wordpress-mysql-root-password
+      key: ROOT_PASSWORD
+      value: ""  # 将由模板生成
+
+    userPassword:
+      useExisting: false
+      name: wordpress-mysql-user-password
+      key: USER_PASSWORD
+      value: ""  # 将由模板生成
+
+# 持久化存储
+persistence:
+  wordpress:
+    enabled: true
+    storageClass: "local-path"
+    accessMode: ReadWriteOnce
+    size: 5Gi
+
+  mysql:
+    enabled: true
+    storageClass: "local-path"
+    accessMode: ReadWriteOnce
+    size: 5Gi
+
+# 服务配置
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30080  # 固定端口
+
+# 资源限制
+resources:
+  wordpress:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+
+  mysql:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+
+# 安全配置
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000

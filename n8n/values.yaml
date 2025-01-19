@@ -1,0 +1,102 @@
+# n8n Helm Chart 配置
+
+# 命名空间配置
+namespace:
+  name: n8n
+
+# 基础配置
+replicaCount: 1
+
+# 镜像配置
+image:
+  repository: n8nio/n8n
+  tag: latest  # 使用最新版本
+  pullPolicy: Always  # 修改为Always以确保每次都拉取最新镜像
+
+# 服务配置
+service:
+  type: NodePort
+  port: 5678
+  nodePort: 30678  # 固定NodePort
+
+# 入口配置（可选）
+ingress:
+  enabled: false
+  annotations: 
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  hosts:
+    - host: n8n.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+# 持久化存储配置
+persistence:
+  enabled: true
+  storageClass: "local-path"  # k3s默认存储类
+  accessMode: ReadWriteOnce
+  size: 5Gi
+  mountPath: /home/node/.n8n
+
+# 资源配置
+resources:
+  limits:
+    cpu: 1
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
+
+# 密钥管理
+secrets:
+  # 加密密钥配置
+  encryptionKey:
+    # 如果留空，将自动生成随机密钥
+    value: ""
+  
+  # 数据库凭据（可选）
+  database:
+    username: ""
+    password: ""
+
+# 环境变量配置
+env:
+  # N8N基本配置
+  N8N_HOST: 0.0.0.0
+  N8N_PORT: 5678
+  
+  # 数据库配置
+  DB_TYPE: sqlite
+  DB_SQLITE_FILE: /home/node/.n8n/database.sqlite
+
+# 安全上下文
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+# 健康检查
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 5678
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: 5678
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  failureThreshold: 3
+
+# 节点选择器（可选）
+nodeSelector: {}
+
+# 容忍度（可选）
+tolerations: []
+
+# 亲和性配置（可选）
+affinity: {}

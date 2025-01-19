@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wordpress-mysql-root-password
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
+type: Opaque
+stringData:
+  ROOT_PASSWORD: {{ randAlphaNum 16 | quote }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wordpress-mysql-user-password
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
+type: Opaque
+stringData:
+  USER_PASSWORD: {{ randAlphaNum 16 | quote }}
