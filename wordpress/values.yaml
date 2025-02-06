@@ -1,3 +1,6 @@
+# 名称空间配置
+namespace: wordpress-app  # 可以根据实际需求修改名称空间
+
 # 基础配置
 replicaCount: 1
 
@@ -26,13 +29,13 @@ secrets:
       useExisting: false
       name: wordpress-mysql-root-password
       key: ROOT_PASSWORD
-      value: ""  # 将由模板生成
+      value: "wordpress-root-password"  # 建议使用更复杂的密码
 
     userPassword:
       useExisting: false
       name: wordpress-mysql-user-password
       key: USER_PASSWORD
-      value: ""  # 将由模板生成
+      value: "wordpress-user-password"  # 建议使用更复杂的密码
 
 # 持久化存储
 persistence:
@@ -66,11 +69,11 @@ resources:
 
   mysql:
     limits:
-      cpu: 1
-      memory: 1Gi
-    requests:
       cpu: 500m
       memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
 
 # 安全配置
 securityContext:
