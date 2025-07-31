@@ -29,13 +29,13 @@ secrets:
       useExisting: false
       name: wordpress-mysql-root-password
       key: ROOT_PASSWORD
-      value: "wordpress-root-password"  # 建议使用更复杂的密码
+      value: "sBDLfEt2VeAc6cUfmyST"  # 建议使用更复杂的密码
 
     userPassword:
       useExisting: false
       name: wordpress-mysql-user-password
       key: USER_PASSWORD
-      value: "wordpress-user-password"  # 建议使用更复杂的密码
+      value: "sBDLfEt2VeAc6cUfmyST"  # 建议使用更复杂的密码
 
 # 持久化存储
 persistence:
