@@ -2,4 +2,4 @@ apiVersion: v2
 name: wordpress
 description: A Helm chart for WordPress on K3s
 version: 0.1.0
-appVersion: "6.3"
+appVersion: "6.7.1"
